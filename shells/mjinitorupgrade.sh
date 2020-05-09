@@ -30,7 +30,7 @@ codePull() {
     if [[ ${hasProfile} == 0 ]]; then
         git clone http://192.168.1.75/devOps/mj-sh ${targetPath}
     else
-        git pull
+        git pull --rebase
     fi
 }
 
