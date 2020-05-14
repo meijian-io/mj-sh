@@ -1,8 +1,5 @@
 #!/bin/sh
 
-#workDir=$(cd $(dirname $0); pwd)
-#cd ${workDir}
-
 project=mj-sh
 profile_sh_path=
 hasProfile=0
@@ -45,6 +42,10 @@ fi
 
 # 应用环境变量
 source ~/.bash_profile
+if [[ -f "$HOME/.zshrc" ]]; then
+    echo "存在zshrc ➜  ~ source ~/.zshrc"
+    source ~/.zshrc
+fi
 
 echo 当前可用脚本:
-ls -F ./shells |grep "*"
+ls -F ${profile_sh_path} |grep "*"
