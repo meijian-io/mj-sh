@@ -10,7 +10,7 @@ port=6979
 pwd=Mj@tjsaowu@rDp
 
 if [[ ${pattern} == "" ]]; then
-  echo "请输入需要删除的key正则，eg：mjredis-sentinel-clear.sh *userId* 10"
+  echo "请输入需要删除的key正则，eg：mjredis-sentinel-clear.sh \"*userId*\" 10"
   exit 0
 fi
 if [[ ${dbNum} == "" ]]; then

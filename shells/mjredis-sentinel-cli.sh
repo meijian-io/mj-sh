@@ -2,6 +2,9 @@
 
 envNum=$1
 dbNum=0
+host=192.168.1.50
+port=6979
+pwd=Mj@tjsaowu@rDp
 
 if [[ ${envNum} == "" ]]; then
   echo "eg1：mjredis-sentinel-cli.sh t1（t1环境，db=10...）"
@@ -32,4 +35,5 @@ else
 fi
 
 #redis-cli -h 192.168.1.50 -a Mj@tjsaowu@rDp -p 6979 -n ${dbNum} 2>/dev/null
-redis-cli -u "redis://Mj%40tjsaowu%40rDp@192.168.1.50:6979/${dbNum}" 2>/dev/null
+#redis-cli -u "redis://Mj%40tjsaowu%40rDp@192.168.1.50:6979/${dbNum}" 2>/dev/null
+redis-cli -h ${host} -p ${port} -a ${pwd} -n ${dbNum} 2>/dev/null
