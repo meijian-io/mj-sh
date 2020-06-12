@@ -49,4 +49,8 @@ appFullName=${appFullName%-*}
 # 系统端口  $serverPort  $debugPort
 source ./opt/script/port.sh ${appFullName}
 
+if [[ ${debugPort} == "" ]]; then
+    read -p "没有预设端口，请输入自定义debug端口，并回车继续。" debugPort
+fi
+
 kubectl port-forward ${podName} ${debugPort}:9090 -n meijian-test${envNum}
