@@ -1,10 +1,23 @@
 #!/bin/sh
 
-mvnRepo=$(mvn help:evaluate -Dexpression=settings.localRepository | grep -v '\[INFO\]')
 del_package=$1
 
+get_local_setEnv() {
+    mvnRepo=$(mvn help:evaluate -Dexpression=settings.localRepository | grep -v '\[INFO\]')
+    sleep 3s
+    echo "export M2_LOCAL_REPOSITORY=${mvnRepo}" >> ~/.bash_profile
+    source ~/.bash_profile
+    if [[ -f "$HOME/.zshrc" ]]; then
+        echo "存在zshrc ➜  ~ source ~/.zshrc"
+        source ~/.zshrc
+    fi
+}
+
+mvnRepo=${M2_LOCAL_REPOSITORY}
+if [[ ${mvnRepo} == "" ]]; then
+    get_local_setEnv
+fi
 cd ${mvnRepo}
-pwd
 
 if [[ ! -n "$del_package" ]]; then
   echo "没有入参------删除所有快照包"
