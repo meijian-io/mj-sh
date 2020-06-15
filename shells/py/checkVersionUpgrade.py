@@ -67,12 +67,12 @@ def has_snapshot(file_path):
         return False
 
 
-def get_module(pom_file, only_snapshot):
+def get_module(pom_file, type):
     """
     获取所有版本号
 
     :param pom_file: 文件全路径
-    :param only_snapshot: True-只取快照，False-取所有"com.meijian"
+    :param type: snapshot-取快照包, release-取正式包, all-取所有"com.meijian"
     :return: [[groupId, artifactId, version]]
     """
     pfa = pom_file.split('/')
@@ -88,13 +88,17 @@ def get_module(pom_file, only_snapshot):
                 artifactId = dep.getElementsByTagName("artifactId")[0].childNodes[0].nodeValue.encode("utf-8")
                 if dep.getElementsByTagName("version").length > 0:
                     version = dep.getElementsByTagName("version")[0].childNodes[0].nodeValue.encode("utf-8")
-                    if only_snapshot and "SNAPSHOT" in version:
+                    if type == "snapshot" and "SNAPSHOT" in version:
                         outArray.append([groupId, artifactId, version, pom_lp])
-                    if bool(1 - only_snapshot) and "meijian" in groupId \
-                            and version != "1.0" \
+                    if type == "release" and "RELEASE" in version and version != "1.0" \
+                            and "meijian" in groupId \
                             and "biz-service" not in artifactId \
-                            and "-core" not in artifactId \
-                            and "-impl" not in artifactId:
+                            and "-core" not in artifactId and "-impl" not in artifactId:
+                        outArray.append([groupId, artifactId, version, pom_lp])
+                    if type == "all" and version != "1.0" \
+                            and "meijian" in groupId \
+                            and "biz-service" not in artifactId \
+                            and "-core" not in artifactId and "-impl" not in artifactId:
                         outArray.append([groupId, artifactId, version, pom_lp])
     return outArray
 
@@ -114,17 +118,19 @@ def array_rm(two_array):
     return g
 
 
-def check_snapshot_version(pom_list):
+def check_version(pom_list, type):
+    """检测版本号
+
+    :param pom_list: 文件
+    :param type: snapshot-快照，release-正式，all-所有
+    :return: 无返回
+    """
     moduleArray = []
     for pomFile in pom_list:
-        hs = has_snapshot(pomFile)
-        # print(str(hs) + "  " + f)
-        if hs:
-            dep = get_module(pomFile, True)
-            moduleArray = moduleArray + dep
-    # print outArray
+        dep = get_module(pomFile, type)
+        moduleArray = moduleArray + dep
     mList = array_rm(moduleArray)
-    print("——————————————SNAPSHOT version [%s]——————————————" % len(mList))
+    print("——————————————%s version [%s]——————————————" % (type, len(mList)))
     print("私服最高版本--\t--groupId--\t--artifactId--\t--version--\t--pom--")
     for one in mList:
         lastVersion = get_last_release_version(one[0], one[1])
@@ -134,31 +140,15 @@ def check_snapshot_version(pom_list):
             print '%s\t%s' % (lastVersion[2], '\t'.join(one))
 
 
-def check_all_version(pom_list):
-    moduleArray = []
-    for pomFile in pom_list:
-        dep = get_module(pomFile, False)
-        moduleArray = moduleArray + dep
-    # print outArray
-    mList = array_rm(moduleArray)
-    print("——————————————all version [%s]——————————————" % len(mList))
-    print("私服最高版本--\t--groupId--\t--artifactId--\t--version--\t--pom--")
-    for one in mList:
-        if "SNAPSHOT" not in one[2]:
-            lastVersion = get_last_release_version(one[0], one[1])
-            if lastVersion is None:
-                print 'noRelease\t%s' % '\t'.join(one)
-            if lastVersion is not None and lastVersion[2] != one[2]:
-                print '%s\t%s' % (lastVersion[2], '\t'.join(one))
-
-
 # xxx.py {isSnapshot} {projectPath}
 if __name__ == "__main__":
-#     projectPath = "/Users/meijian-wyl/work/serverProjects"
+    # projectPath = "/Users/meijian-wyl/work/serverProjects"
     projectPath = sys.argv[2]
     pomList = find_pom(projectPath)
-    print("%s ======>>总计[%s]个pom文件" % (projectPath, len(pomList)))
+    print("---->>[%s]======>>总计[%s]个pom文件" % (projectPath, len(pomList)))
     if sys.argv[1] == "snapshot":
-        check_snapshot_version(pomList)
-    else:
-        check_all_version(pomList)
+        check_version(pomList, sys.argv[1])
+    elif sys.argv[1] == "release":
+        check_version(pomList, sys.argv[1])
+    elif sys.argv[1] == "all":
+        check_version(pomList, sys.argv[1])
