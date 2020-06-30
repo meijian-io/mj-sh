@@ -1,0 +1,46 @@
+
+management:
+    context-path: /mjmonitor
+    # disable other health check
+    health:
+        jms:
+            enabled: false
+        redis:
+            enabled: false
+        mongo:
+            enabled: false
+        solr:
+            enabled: false
+        db:
+            enabled: false
+        diskspace:
+            enabled: false
+        elasticsearch:
+            enabled: false
+        rabbit:
+            enabled: false
+        mail:
+            enabled: false
+# disable other endpoints
+endpoints:
+    health:
+        path: /health
+        enabled: true
+    info:
+        enabled: false
+    env:
+        enabled: false
+    mappings:
+        enabled: false
+    trace:
+        enabled: false
+    metrics:
+        enabled: false
+    dump:
+        enabled: false
+    autoconfig:
+        enabled: false
+    configprops:
+        enabled: false
+    beans:
+        enabled: false

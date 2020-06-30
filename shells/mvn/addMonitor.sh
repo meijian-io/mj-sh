@@ -1,60 +1,64 @@
+#!/usr/bin/env bash
 sh_path=`dirname $0`
+workDir=$(pwd)
 
-yaml_conf=`cat "$sh_path/yaml_conf"`
-yamls=`find . -name "application.yaml" -or -name "application.yml"`
-for yaml in $yamls:
-do
-    if [[ ${yaml} == ":" ]];
-        then continue
-    fi
-    
-    if [[ ${yaml} == *:* ]];
-        then yaml=${yaml%:*};
-    fi
+filePath=
 
-    if grep -q "base-path: /mjmonitor" $yaml
-    then
-        echo "$yaml had be processed"
-        continue
+check_version() {
+#    echo ${filePath}
+    if [[ ${filePath} =~ "/mj-server/" || ${filePath} =~ "/meijian-push/" ]]; then
+        if [[ ${filePath} =~ .properties$ ]]; then
+            properties_conf="properties_conf_old"
+            properties_key_val="management.context-path"
+        else
+            properties_conf="yaml_conf_old"
+            properties_key_val="path: /health"
+        fi
     else
-        modulePath=${yaml%/src/main*}
-        # echo $modulePath
-        if [[ -f "$modulePath/pom.xml" ]]; then
-                echo "find pom: $modulePath/pom.xml"
-                cat $sh_path/yaml_conf >> $yaml
+        if [[ ${filePath} =~ .properties$ ]]; then
+            properties_conf="properties_conf"
+            properties_key_val="management.endpoints.web.base-path"
+        else
+            properties_conf="yaml_conf"
+            properties_key_val="base-path: /mjmonitor"
         fi
     fi
-done
+}
 
-if [[ $1 == "old" ]]; then
-    properties_conf="properties_conf_old"
-    properties_key_val="management.context-path"
-else
-    properties_conf="properties_conf"
-    properties_key_val="management.endpoints.web.base-path"
-fi
-properties=`find . -name "application.properties"`
+add_proper() {
+    properties=`find . -name "application.yaml" -or -name "application.yml" -or  -name "application.properties"`
 
-for property in $properties:
-do
-    if [[ ${property} == ":" ]];
-        then continue
-    fi
-    
-    if [[ ${property} == *:* ]];
-        then property=${property%:*};
-    fi
-    
-    if grep -q $properties_key_val $property
-    then
-        echo "$property had be processed"
-        continue
-    else
+    for property in ${properties}; do
+        if [[ ${property} == ":" ]]; then
+            continue
+        fi
+
+        if [[ ${property} == *:* ]]; then
+            property=${property%:*};
+        fi
+
+        filePath=${workDir}/${property}
+        check_version
+
         modulePath=${property%/src/main*}
-        # echo $modulePath
-        if [[ -f "$modulePath/pom.xml" ]]; then
-                echo "find pom: $modulePath/pom.xml"
-                cat $sh_path/$properties_conf >> $property
+        if [[ -f "${modulePath}/pom.xml" ]]; then
+#            echo "find pom: ${modulePath}/pom.xml"
+
+#            hadPro=$(grep "${properties_key_val}" ${property})
+#            if [[ ${hadPro} == "" ]]; then
+#                cat ${sh_path}/${properties_conf} >> ${property}
+#            fi
+            hadPom=$(grep "spring-boot-starter-actuator" ${modulePath}/pom.xml)
+            if [[ ${hadPom} == "" ]]; then
+                echo "no spring-boot-starter-actuator: ${modulePath}/pom.xml"
+            fi
+            hadWeb=$(grep "spring-boot-starter-web" ${modulePath}/pom.xml)
+            if [[ ${hadWeb} == "" ]]; then
+                echo "no spring-boot-starter-web: ${modulePath}/pom.xml"
+            fi
         fi
-    fi
-done
+    done
+}
+
+add_proper
+
