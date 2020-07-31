@@ -16,10 +16,11 @@ git clone http://192.168.1.75/devOps/mj-sh ~/.mj-sh
 ## mjk8s**.sh 使用
 
 使用前提：
-1. 配置文件：~/.kube/config
-2. 命令：kubectl
+### 1. 拷贝配置文件：~/.kube/config
+> cp ~/.mj-sh/resources/devuser.kubeconfig ~/.kube/config
 
-在 macOS 上用 Homebrew 安装 kubectl (推荐)
+### 2. 安装命令：kubectl
+在 macOS 上用 Homebrew 安装 kubectl (**推荐**)
 > brew install kubernetes-cli
 
 [安装kubectl-官网](https://kubernetes.io/zh/docs/tasks/tools/install-kubectl/#%E5%AE%89%E8%A3%85-kubectl)
@@ -32,7 +33,7 @@ git clone http://192.168.1.75/devOps/mj-sh ~/.mj-sh
 使用前提：
 1. 命令：redis-cli
 
-在 macOS 上用 Homebrew 安装 redis (推荐)
+在 macOS 上用 Homebrew 安装 redis (**推荐**)
 > brew install redis
 
 [Redis下载安装-官网](https://redis.io/download)
