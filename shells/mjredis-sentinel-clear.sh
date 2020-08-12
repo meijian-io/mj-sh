@@ -5,7 +5,7 @@
 
 pattern=$1
 dbNum=$2
-host=192.168.1.50
+host=192.168.1.52
 port=6979
 pwd=Mj@tjsaowu@rDp
 

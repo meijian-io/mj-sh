@@ -16,7 +16,6 @@ echo "-------- start connect test${envNum} MySQL -------- "
 ##$MYSQL test -u root << EOF
 #echo ${MYSQL}
 
-echo "mysql -htest${envNum} -uroot -P3306 -p"
-mysql -htest${envNum} -uroot -P3306 -p
+/usr/local/mysql/bin/mysql -htest${envNum} -uroot -P3306 -pdgjDpp123
 
 # mysql  -h  主机名(ip)  -u  用户名 -P 端口 -p

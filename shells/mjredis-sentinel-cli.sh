@@ -2,7 +2,7 @@
 
 envNum=$1
 dbNum=0
-host=192.168.1.50
+host=192.168.1.52
 port=6979
 pwd=Mj@tjsaowu@rDp
 
