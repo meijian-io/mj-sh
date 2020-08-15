@@ -6,19 +6,22 @@
 envNum=$1
 appNameKey=$2
 podName=""
+confAndN="-n meijian-test${envNum}"
 
 if [[ ${envNum} == "" ]]; then
     echo "[error] 请输入测试环境编号，eg： mjk8sexec.sh 5 site"
     exit 0
+elif [ ${envNum} == "pre" ]; then
+    confAndN="--kubeconfig $(cd ~; pwd)/.kube/config-pre.kubeconfig -n meijian-prerelease1"
 fi
 
 echo "-------- ready to exec test${envNum} ${appNameKey} -------- "
 
 getPodName() {
     if [[ ${appNameKey} == "" ]]; then
-        podName=$(kubectl get pod -n meijian-test${envNum} | awk '{print $1}')
+        podName=$(kubectl ${confAndN} get pod | awk '{print $1}')
     else
-        podName=$(kubectl get pod -n meijian-test${envNum} | grep ${appNameKey} | awk '{print $1}')
+        podName=$(kubectl ${confAndN} get pod | grep ${appNameKey} | awk '{print $1}')
     fi
 
     if [[ ${podName} == "" ]]; then
@@ -41,4 +44,4 @@ getPodName
 echo "-------- the pod is ${podName} -------- "
 sleep 1s
 
-kubectl exec -it ${podName} -n meijian-test${envNum} -- sh
+kubectl ${confAndN} exec -it ${podName} -- sh

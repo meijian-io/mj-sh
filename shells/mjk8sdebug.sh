@@ -9,19 +9,22 @@ cd ${workDir}/..
 envNum=$1
 appNameKey=$2
 podName=""
+confAndN="-n meijian-test${envNum}"
 
 if [[ ${envNum} == "" ]]; then
     echo "[error] input test env number，eg： mjk8sdebug.sh 5 site"
     exit 0
+elif [ ${envNum} == "pre" ]; then
+    confAndN="--kubeconfig $(cd ~; pwd)/.kube/config-pre.kubeconfig -n meijian-prerelease1"
 fi
 
 echo "-------- start debug test${envNum} ${appNameKey} -------- "
 
 getPodName() {
     if [[ ${appNameKey} == "" ]]; then
-        podName=$(kubectl get pod -n meijian-test${envNum} | awk '{print $1}')
+        podName=$(kubectl ${confAndN} get pod | awk '{print $1}')
     else
-        podName=$(kubectl get pod -n meijian-test${envNum} | grep ${appNameKey} | awk '{print $1}')
+        podName=$(kubectl ${confAndN} get pod | grep ${appNameKey} | awk '{print $1}')
     fi
 
     if [[ ${podName} == "" ]]; then
@@ -53,4 +56,4 @@ if [[ ${debugPort} == "" ]]; then
     read -p "没有预设端口，请输入自定义debug端口，并回车继续。" debugPort
 fi
 
-kubectl port-forward ${podName} ${debugPort}:9090 -n meijian-test${envNum}
+kubectl ${confAndN} port-forward ${podName} ${debugPort}:9090
