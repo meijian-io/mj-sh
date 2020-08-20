@@ -100,6 +100,17 @@ def get_module(pom_file, type):
                             and "biz-service" not in artifactId \
                             and "-core" not in artifactId and "-impl" not in artifactId:
                         outArray.append([groupId, artifactId, version, pom_lp])
+                    if type == "other" and "SNAPSHOT" not in version and "RELEASE" not in version and version != "1.0" \
+                            and "meijian" in groupId \
+                            and "biz-service" not in artifactId \
+                            and "-core" not in artifactId and "-impl" not in artifactId:
+                        outArray.append([groupId, artifactId, version, pom_lp])
+                else:
+                    if type == "none" \
+                            and "meijian" in groupId \
+                            and "biz-service" not in artifactId \
+                            and "-core" not in artifactId and "-impl" not in artifactId:
+                        outArray.append([groupId, artifactId, "parentVersion", pom_lp])
     return outArray
 
 
@@ -146,9 +157,10 @@ if __name__ == "__main__":
     projectPath = sys.argv[2]
     pomList = find_pom(projectPath)
     print("---->>[%s]======>>总计[%s]个pom文件" % (projectPath, len(pomList)))
-    if sys.argv[1] == "snapshot":
-        check_version(pomList, sys.argv[1])
-    elif sys.argv[1] == "release":
-        check_version(pomList, sys.argv[1])
-    elif sys.argv[1] == "all":
-        check_version(pomList, sys.argv[1])
+    check_version(pomList, sys.argv[1])
+    # if sys.argv[1] == "snapshot":
+    #     check_version(pomList, sys.argv[1])
+    # elif sys.argv[1] == "release":
+    #     check_version(pomList, sys.argv[1])
+    # elif sys.argv[1] == "all":
+    #     check_version(pomList, sys.argv[1])

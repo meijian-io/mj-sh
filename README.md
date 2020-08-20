@@ -17,7 +17,7 @@ git clone http://192.168.1.75/devOps/mj-sh ~/.mj-sh
 
 使用前提：
 ### 1. 拷贝配置文件：~/.kube/config
-> cp ~/.mj-sh/resources/devuser.kubeconfig ~/.kube/config
+> mkdir ~/.kube ; cp ~/.mj-sh/resources/devuser.kubeconfig ~/.kube/config
 
 ### 2. 安装命令：kubectl
 在 macOS 上用 Homebrew 安装 kubectl (**推荐**)

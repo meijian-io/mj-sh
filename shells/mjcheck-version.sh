@@ -10,15 +10,14 @@ userPath=$(cd ~; pwd)
 doWhat=$1
 projectPath=$2
 
-if [[ ${workDir} == ${userPath} ]]; then
+if [[ ${workDir} == ${userPath} || ${doWhat} == "showTips" ]]; then
     echo "tips---->> cd到目标根目录，或 mjcheck-version.sh snapshot {realPath}"
-    echo "tips---->> mjcheck-version.sh snapshot（只检测快照包-默认）| release（所有meijian.RELEASE包）| all（所有meijian包）"
+    echo "tips---->> mjcheck-version.sh"
+    echo "    snapshot（只检测快照包-默认）| release（所有meijian.RELEASE包）| all（所有meijian包）| other(非快照也非release) | none(没有指定版本)"
     exit 0
 fi
 
 if [[ ${projectPath} == "" ]]; then
-    echo "tips---->> cd到目标根目录，或 mjcheck-version.sh snapshot {realPath}"
-    echo "tips---->> mjcheck-version.sh snapshot（只检测快照包-默认）| release（所有meijian.RELEASE包）| all（所有meijian包）"
     projectPath=${workDir}
 fi
 
@@ -32,11 +31,21 @@ checkRelease() {
 
 checkSnapshot() {
     python ${shDir}/py/checkVersionUpgrade.py snapshot ${projectPath}
+    python ${shDir}/py/checkVersionUpgrade.py none ${projectPath}
+}
+
+checkOther() {
+    python ${shDir}/py/checkVersionUpgrade.py other ${projectPath}
+}
+checkNone() {
+    python ${shDir}/py/checkVersionUpgrade.py none ${projectPath}
 }
 
 case ${doWhat} in
 all) checkAll ;;
 release) checkRelease ;;
 snapshot) checkSnapshot ;;
+other) checkOther ;;
+none) checkNone ;;
 *) checkSnapshot ;;
 esac
