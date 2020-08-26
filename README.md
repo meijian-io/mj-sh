@@ -46,3 +46,5 @@ make
 
 查看版本
 > redis-cli --version
+
+# [禅道集成Git](opt/zentao/README.md)
