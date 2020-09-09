@@ -5,6 +5,7 @@
 
 envNum=$1
 appNameKey=$2
+logsLine=$3
 podName=""
 confAndN="-n meijian-test${envNum}"
 
@@ -13,6 +14,9 @@ if [[ ${envNum} == "" ]]; then
     exit 0
 elif [ ${envNum} == "pre" ]; then
     confAndN="--kubeconfig $(cd ~; pwd)/.kube/config-pre.kubeconfig -n meijian-prerelease1"
+fi
+if [[ ${logsLine} == "" ]]; then
+    logsLine=50
 fi
 
 echo "-------- start show log test${envNum} ${appNameKey} -------- "
@@ -44,4 +48,4 @@ getPodName
 echo "-------- the pod is ${podName} -------- "
 sleep 1s
 
-kubectl ${confAndN} logs -f ${podName}
+kubectl ${confAndN} logs -f --tail=${logsLine} ${podName}
