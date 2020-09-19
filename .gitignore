@@ -31,3 +31,5 @@ target/
 
 # PDT-specific
 .buildpath
+
+/resources/my.env.sh

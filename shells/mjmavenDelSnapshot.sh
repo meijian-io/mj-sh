@@ -1,7 +1,7 @@
 #!/bin/sh
 
 del_package=$1
-source "$(cd $(dirname $0); pwd)/../resources/my.env.sh"
+source "$(dirname $0)/../resources/my.env.sh"
 
 if [[ ${mj_m2_local_repository} == "" ]]; then
 #    get_local_setEnv

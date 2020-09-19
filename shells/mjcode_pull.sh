@@ -1,7 +1,7 @@
 #!/bin/sh
 
-branchName=$2 # 空=当前分支，不为空则checkout
-source "$(cd $(dirname $0); pwd)/../resources/my.env.sh"
+branchName=$1 # 空=当前分支，不为空则checkout
+source "$(dirname $0)/../resources/my.env.sh"
 
 codePull() {
   echo "==>> git pull $(pwd)"

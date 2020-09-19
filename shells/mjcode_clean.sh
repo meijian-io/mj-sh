@@ -1,6 +1,6 @@
 #!/bin/sh
 
-source "$(cd $(dirname $0); pwd)/../resources/my.env.sh"
+source "$(dirname $0)/../resources/my.env.sh"
 
 loopProject() {
   #历遍ls命令显示目录
