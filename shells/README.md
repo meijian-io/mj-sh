@@ -15,6 +15,7 @@
 - mjmysqlconnect.sh     连接测试MySQL数据库
 - mjredis-sentinel-clear.sh 删除测试Redis数据
 - mjredis-sentinel-cli.sh   连接测试Redis
+- mjkill.sh             根据进程名或端口杀死进程
 
 ### mjcheck-version_case
 
