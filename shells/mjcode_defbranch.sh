@@ -6,6 +6,17 @@ branchMaster=$2 # 检测被包含分支，比如：master
 originName=$3   #远程仓库名称，为空检测本地分支
 source "$(dirname $0)/../resources/my.env.sh"
 
+if [[ $1 == "showTips" ]]; then
+    echo "tips---->>"
+    echo "  mjcode_defbranch.sh                 #比较当前分支是否已合并 origin/master"
+    echo "  mjcode_defbranch.sh publish         #比较 publish 分支是否已合并 origin/master"
+    echo "  mjcode_defbranch.sh publish master  #功能同上"
+    echo "  mjcode_defbranch.sh master publish  #比较 master 是否已合并 publish"
+    echo "  mjcode_defbranch.sh origin/publish  #比较 origin/publish 是否已合并 origin/master"
+    echo "  mjcode_defbranch.sh origin/master origin/publish #比较 origin/master 是否已合并 origin/publish"
+    exit 0
+fi
+
 if [[ -z ${branchDev} ]]; then
   branchDev=header
 fi

@@ -4,6 +4,7 @@
 - mjcode_checkbranch.sh 所有项目，检测远程仓库中是否有该分支。[示例详情](#mjcode_checkbranch_case)
 - mjcode_clean.sh       所有项目，clean
 - mjcode_defbranch.sh   所有项目，比较分支是否包含分支。[示例详情](#mjcode_defbranch_case)
+- mjcode_master_haved.sh    检测所有远程分支是否已合并master，（mjcode_master_haved.sh showTips）查看说明
 - mjcode_pull.sh        所有项目，更新 pull --rebase
 - mjinitorupgrade.sh    脚本安装或更新
 - mjk8sdebug.sh         debug测试环境服务 

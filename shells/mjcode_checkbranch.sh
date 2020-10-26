@@ -5,6 +5,14 @@ branchName=$1 # 要检测的分支名称
 showHave=$2   # 默认=1；0、打印不包含分支的项目，1、打印包含该分支的项目
 source "$(dirname $0)/../resources/my.env.sh"
 
+if [[ $1 == "showTips" ]]; then
+    echo "tips---->> mjcode_checkbranch.sh publish"
+    echo "  mjcode_checkbranch.sh publish     #检测远程origin仓库是否有 publish 分支，并打印有该分支的项目"
+    echo "  mjcode_checkbranch.sh publish 1   #同上"
+    echo "  mjcode_checkbranch.sh publish 0   #检测远程origin仓库是否有 publish 分支，并打印没有该分支的项目"
+    exit 0
+fi
+
 if [[ ${branchName} == "" ]]; then
   read -p "[error] 请输入你要检测的分支名称：" branchName
   if [[ ${branchName} == "" ]]; then

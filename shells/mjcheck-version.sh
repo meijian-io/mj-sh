@@ -10,7 +10,7 @@ userPath=$(cd ~; pwd)
 doWhat=$1
 projectPath=$2
 
-if [[ ${workDir} == ${userPath} || ${doWhat} == "showTips" ]]; then
+if [[ ${workDir} == ${userPath} || $1 == "showTips" ]]; then
     echo "tips---->> cd到目标根目录，或 mjcheck-version.sh snapshot {realPath}"
     echo "tips---->> mjcheck-version.sh"
     echo "    snapshot（只检测快照包-默认）| release（所有meijian.RELEASE包）| all（所有meijian包）| other(非快照也非release) | none(没有指定版本)"
