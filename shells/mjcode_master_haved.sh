@@ -19,11 +19,13 @@ checkLog() {
   for BRANCH in ${remoteBranch}; do
     git_dev_m=$(git log origin/${BRANCH} ^origin/master 2>/dev/null)
     if [[ -n "${git_dev_m}" ]]; then
+      #master 不包含当前分支
       if [[ ${showLog} -le "0" ]]; then
         echo "[$(pwd)]项目 master 未合并 ${BRANCH}"
       fi
       git_m_d=$(git log origin/master ^origin/${BRANCH} 2>/dev/null)
       if [[ -n "${git_m_d}" && ${showLog} -ge "0" ]]; then
+        #当前分支 不包含所有master内容
         echo "[$(pwd)]项目 ${BRANCH} 未合并 master"
       fi
     fi
