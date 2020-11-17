@@ -31,7 +31,6 @@ checkRelease() {
 
 checkSnapshot() {
     python ${shDir}/py/checkVersionUpgrade.py snapshot ${projectPath}
-    python ${shDir}/py/checkVersionUpgrade.py none ${projectPath}
 }
 
 checkOther() {
