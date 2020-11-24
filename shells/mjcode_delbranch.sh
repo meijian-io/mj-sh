@@ -37,6 +37,10 @@ delBranch() {
   if [[ ${branchName} == "all" ]]; then
     delAllBranch
   else
+    git_dev_m=$(git log origin/${branchName} ^origin/master 2>/dev/null)
+    if [[ -n "${git_dev_m}" ]]; then
+      echo "分支[${branchName}]比较master有新增内容"
+    fi
     read -p "确定要删除本地与远程分支[${branchName}]吗？1=all，2=only local：" choose
     case ${choose} in
     1)
