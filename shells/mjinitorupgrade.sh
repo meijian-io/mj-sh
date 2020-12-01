@@ -34,7 +34,7 @@ fi
 codePull() {
     echo "start update code [${MJ_SH_HOME}]"
     if [[ ${hasProfile} == 0 ]]; then
-        git clone http://192.168.1.75/devOps/mj-sh ${MJ_SH_HOME}
+        git clone git@codeup.aliyun.com:meijian/devOps/mj-sh.git ${MJ_SH_HOME}
     fi
     cd ${MJ_SH_HOME}
     git pull --rebase

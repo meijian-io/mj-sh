@@ -2,7 +2,7 @@
 
 安装或更新脚本使用：mjinitorupgrade.sh
 ```bash
-git clone http://192.168.1.75/devOps/mj-sh ~/.mj-sh
+git clone git@codeup.aliyun.com:meijian/devOps/mj-sh.git ~/.mj-sh
 
 ~/.mj-sh/shells/mjinitorupgrade.sh
 
