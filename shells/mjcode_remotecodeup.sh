@@ -15,7 +15,7 @@ codePull() {
   oldUrl=$(git remote get-url origin)
   newUrl=""
   if [[ -n $(echo ${oldUrl} | grep "http") ]]; then
-    newUrl=$(echo ${oldUrl} | sed 's/http:\/\/192.168.1.75:/git@codeup.aliyun.com:meijian\//g')
+    newUrl=$(echo ${oldUrl} | sed 's/http:\/\/192.168.1.75/git@codeup.aliyun.com:meijian/g')
   else
     newUrl=$(echo ${oldUrl} | sed 's/git@192.168.1.75:/git@codeup.aliyun.com:meijian\//g')
   fi
