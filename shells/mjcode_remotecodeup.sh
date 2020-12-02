@@ -26,7 +26,6 @@ reset() {
 codePull() {
   echo ""
   echo "==>> git remote update [$(pwd)]"
-  reset
   oldUrl=$(git remote get-url origin)
   newUrl=""
   if [[ -n $(echo ${oldUrl} | grep "http") ]]; then
@@ -36,12 +35,7 @@ codePull() {
   fi
   if [[ -n ${newUrl} ]]; then
     echo "-->remote update [${oldUrl}] to [${newUrl}]"
-    if [[ ${delUpdate} == "del" || ${delUpdate} == "reset" ]]; then
-      git remote remove origin
-    else
-      git remote rename origin mj_gitlab_backup
-    fi
-    git remote add origin ${newUrl}
+    git remote set-url origin ${newUrl}
     git remote -v
   else
     echo "==error==远程仓库地址替换失败==>>${oldUrl}"
