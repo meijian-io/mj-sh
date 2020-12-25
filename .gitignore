@@ -19,6 +19,7 @@ target/
 .ideabackup/
 .loadpath
 .DS_Store
+logs.*
 
 # External tool builders
 .externalToolBuilders/
