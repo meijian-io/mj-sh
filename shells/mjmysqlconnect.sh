@@ -16,6 +16,6 @@ echo "-------- start connect test${envNum} MySQL -------- "
 ##$MYSQL test -u root << EOF
 #echo ${MYSQL}
 
-/usr/local/mysql/bin/mysql -htest${envNum} -uroot -P3306 -pdgjDpp123
+/usr/local/mysql/bin/mysql -hmysql.meijian-test${envNum}.svc.cluster.local -uroot -P3306 -pdgjDpp123
 
 # mysql  -h  主机名(ip)  -u  用户名 -P 端口 -p

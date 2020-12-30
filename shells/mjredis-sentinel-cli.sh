@@ -1,37 +1,23 @@
 #!/bin/bash
 
-envNum=$1
-dbNum=0
-host=192.168.1.52
-port=6979
+envNum=$1   # 环境下标
+dbNum=$2    # 哪个db，默认db=0
+host=redis-master.meijian-test${envNum}.svc.cluster.local
+port=6379
 pwd=Mj@tjsaowu@rDp
 
+if [[ $1 == "showTips" ]]; then
+    echo "tips---->> mjredis-sentinel-cli.sh"
+    echo "    mjredis-sentinel-cli.sh 6           # 链接test6的Redis db=0"
+    echo "    mjredis-sentinel-cli.sh 6 2         # 链接test6的Redis db=2"
+    exit 0
+fi
 if [[ ${envNum} == "" ]]; then
-  echo "eg1：mjredis-sentinel-cli.sh t1（t1环境，db=10...）"
-  echo "eg2：mjredis-sentinel-cli.sh 8（db=8）"
+    echo "[error] input test env number，eg： mjredis-sentinel-cli.sh 6"
+    exit 0
+fi
+if [[ ${dbNum} == "" ]]; then
   dbNum=0
-elif [[ ${envNum} == "t1" ]]; then
-  dbNum=10
-elif [[ ${envNum} == "t2" ]]; then
-  dbNum=20
-elif [[ ${envNum} == "t3" ]]; then
-  dbNum=30
-elif [[ ${envNum} == "t4" ]]; then
-  dbNum=40
-elif [[ ${envNum} == "t5" ]]; then
-  dbNum=50
-elif [[ ${envNum} == "t6" ]]; then
-  dbNum=60
-elif [[ ${envNum} == "t7" ]]; then
-  dbNum=70
-elif [[ ${envNum} == "t8" ]]; then
-  dbNum=80
-elif [[ ${envNum} == "t9" ]]; then
-  dbNum=90
-else
-  echo "eg1：mjredis-sentinel-cli.sh t1（t1环境，db=10...）"
-  echo "eg2：mjredis-sentinel-cli.sh 8（db=8）"
-  dbNum=$1
 fi
 
 #redis-cli -h 192.168.1.50 -a Mj@tjsaowu@rDp -p 6979 -n ${dbNum} 2>/dev/null

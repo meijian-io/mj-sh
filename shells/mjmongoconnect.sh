@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-#workDir=$(cd $(dirname $0); pwd)
-#cd ${workDir}/..
-
 envNum=$1
 port=27017
 
@@ -13,6 +10,6 @@ fi
 
 echo "-------- start connect test${envNum} MongoDB -------- "
 
-mongo --host test${envNum} --port ${port}
+mongo --host mongodb.meijian-test${envNum}.svc.cluster.local --port ${port}
 
 # mongo --host host --port port --authenticationDatabase database -u user -p password

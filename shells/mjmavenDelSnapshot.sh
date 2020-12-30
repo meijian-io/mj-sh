@@ -17,9 +17,13 @@ if [[ ! -n "$del_package" ]]; then
 
   find . -name "*-SNAPSHOT"
   find . -name "*-SNAPSHOT" | xargs rm -rf {} \;
+  find . -name "*.SNAPSHOT"
+  find . -name "*.SNAPSHOT" | xargs rm -rf {} \;
 else
   echo "有入参------删除 ./com/meijian/${del_package} 快照包"
 
   find ./com/meijian/${del_package} -name "*-SNAPSHOT"
   find ./com/meijian/${del_package} -name "*-SNAPSHOT" | xargs rm -rf {} \;
+  find ./com/meijian/${del_package} -name "*.SNAPSHOT"
+  find ./com/meijian/${del_package} -name "*.SNAPSHOT" | xargs rm -rf {} \;
 fi
