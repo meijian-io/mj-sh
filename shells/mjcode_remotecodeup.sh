@@ -1,12 +1,11 @@
 #!/bin/sh
 
 source "$(dirname $0)/../resources/my.env.sh"
-delUpdate=$1
 
 if [[ $1 == "showTips" ]]; then
     echo "tips---->>"
-    echo "  mjcode_remotecodeup.sh       # 替换远程仓库地址为云效代码库（删除替换）"
-    echo "  mjcode_remotecodeup.sh this  # 只替换当前仓库远程地址为云效"
+    echo "  $0       # 替换远程仓库地址为云效代码库（删除替换）"
+    echo "  $0 this  # 只替换当前仓库远程地址为云效"
     exit 0
 fi
 
